@@ -14,12 +14,16 @@ This project applies genome-scale metabolic modeling to identify genetic enginee
 
 The workflow is implemented in Python using COBRApy and follows three sequential phases.
 
-### 3.1 Phase A: Model Selection and Baseline Simulation
+### 3.1 Phase A: Baseline (Control) Simulation
 
-1. Model selected: **iML1515** (*E. coli* K-12 MG1655; >2,700 reactions)
-2. Environmental condition: **Microaerobic** (industry-relevant for succinate production)
-3. Optimization objective: **Maximize biomass**
-4. Observation: Reduced growth under low oxygen with **zero succinate secretion**, establishing the control case
+| Step | Action                                  |
+| ---- | --------------------------------------- |
+| 1    | Selected iML1515 genome-scale model     |
+| 2    | Applied microaerobic oxygen constraints |
+| 3    | Optimized for biomass growth            |
+| 4    | Measured growth and succinate secretion |
+
+**Observation:** Growth decreases under low oxygen, but succinate secretion remains **zero**, confirming the need for engineering.
 
 ### 3.2 Phase B: Transcriptomic Data Integration
 
@@ -38,21 +42,21 @@ The workflow is implemented in Python using COBRApy and follows three sequential
    * Succinic acid secretion
 4. Top-performing reactions shortlisted as engineering targets
 
-## 4. Key Findings and Quantitative Results
+## 4. Results Summary
 
-### 4.1 Target 1: Phosphoenolpyruvate Carboxylase (PPC)
+The in silico overexpression scan revealed that only a small subset of reactions can successfully redirect metabolic flux toward succinate production **while maintaining viable growth**. Two key enzymes emerged as effective intervention points.
 
-1. Gene: **ppc**
-2. Growth rate: **0.35 1/h**
-3. Succinate yield: **0.12 mmol/gDW/h**
-4. Interpretation: Growth maintained, but limited product formation
+### 4.1 Identified Engineering Targets
 
-### 4.2 Target 2: Malate Synthase (MALS) — *Primary Recommendation*
+| Target Enzyme | Gene(s)    | Growth Rate (1/h) | Succinate Yield (mmol/gDW/h) | Biological Interpretation                                                                            |
+| ------------- | ---------- | ----------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------- |
+| PPC           | ppc        | 0.35              | 0.12                         | Increases anaplerotic flux into oxaloacetate, but most carbon is still consumed for growth           |
+| **MALS** ⭐    | aceB, glcB | 0.31              | **1.10**                     | Activates the glyoxylate shunt, conserving carbon and forcing excess C4 intermediates to be secreted |
 
-1. Genes: **aceB**, **glcB**
-2. Growth rate: **0.31 1/h**
-3. Succinate yield: **1.10 mmol/gDW/h**
-4. Interpretation: Strong product formation with minimal growth penalty
+**Key Result:** Malate Synthase overexpression leads to ~9× higher succinate secretion compared to PPC, with only a minor reduction in growth rate.
+
+---
+
 
 ## 5. Mechanistic Interpretation
 
@@ -68,5 +72,3 @@ The workflow is implemented in Python using COBRApy and follows three sequential
 2. Succinic acid secretion increases by approximately **9-fold**
 3. Growth rate remains at ~**88%** of the wild-type strain
 4. The glyoxylate shunt is confirmed as a key metabolic lever for succinate production
-
-
