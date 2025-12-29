@@ -55,8 +55,6 @@ The in silico overexpression scan revealed that only a small subset of reactions
 
 **Key Result:** Malate Synthase overexpression leads to ~9× higher succinate secretion compared to PPC, with only a minor reduction in growth rate.
 
----
-
 
 ## 5. Mechanistic Interpretation
 
